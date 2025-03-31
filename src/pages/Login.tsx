@@ -1,20 +1,74 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { UsersRound } from "lucide-react";
-import CustomTheme from "@/components/CustomTheme"
+import CustomTheme from "@/components/CustomTheme";
+import { useAuth } from '@/context/AuthContext';
+import { toast, Toaster } from "sonner";
 
 export default function Login() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [formData, setFormData] = useState({
+        email: "",
+        password: "",
+        rememberMe: false
+    });
+    const [error, setError] = useState(null);
+    const navigate = useNavigate();
+    const { login } = useAuth();
+
+    const handleChange = (e: any) => {
+        const { name, value, type, checked } = e.target;
+        setFormData(prevData => ({
+            ...prevData,
+            [name]: type === 'checkbox' ? checked : value
+        }));
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setError(null);
+        try {
+            const response = await fetch('https://groupgo.onrender.com/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    login: formData.email,
+                    password: formData.password,
+                }),
+            });
+            if (response.ok) {
+                const data = await response.json();
+                const token = data.access_token;
+
+                login(token, formData.rememberMe);
+
+                setTimeout(() => {
+                    navigate('/perfil');
+                }, 500);
+            } else {
+                const errorData = await response.json();
+                setError(errorData.message || 'falha');
+                toast('Falha ao fazer login', {
+                    action: {
+                        label: "Undo",
+                        onClick: () => console.log("undo")
+                    }
+                });
+            }
+        } catch (err) {
+            toast('Falha ao fazer login', {
+                description: 'Erro de servidor',
+                duration: 3000,
+            });
+        }
     };
 
     return (
         <div className="min-h-screen flex items-center justify-center px-4 bg-background text-foreground relative">
+            <Toaster richColors position="top-center" />
             <CustomTheme />
             <div className="w-full max-w-sm space-y-8">
                 <div className="text-center flex flex-col items-center">
@@ -26,8 +80,9 @@ export default function Login() {
                     <Input
                         type="email"
                         placeholder="Email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
                         className="bg-muted/50"
                         required
                     />
@@ -35,8 +90,9 @@ export default function Login() {
                         <Input
                             type="password"
                             placeholder="Senha"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
+                            name="password"
+                            value={formData.password}
+                            onChange={handleChange}
                             className="bg-muted/50"
                             required
                         />
@@ -48,6 +104,16 @@ export default function Login() {
                                 Esqueceu a senha?
                             </Link>
                         </p>
+                    </div>
+                    <div className="flex items-center">
+                        <input
+                            type="checkbox"
+                            name="rememberMe"
+                            checked={formData.rememberMe}
+                            onChange={handleChange}
+                            className="mr-2"
+                        />
+                        <label className="text-sm text-muted-foreground">Lembre de mim</label>
                     </div>
                     <Button type="submit" className="w-full">
                         Entrar
