@@ -11,7 +11,7 @@ const CustomTheme = () => {
             <Switch
                 checked={theme === "dark"}
                 onCheckedChange={toggleTheme}
-                className="data-[state=checked]:bg-primary"
+                className="data-[state=checked]:bg-primary cursor-pointer"
             />
             <Moon className="h-5 w-5" />
         </div >
