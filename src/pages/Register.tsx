@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router";
 import CustomTheme from "@/components/CustomTheme";
 import { UserPlus } from "lucide-react";
 import { toast } from 'sonner'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useReward } from 'react-rewards';
 
 interface FormData {
@@ -14,6 +14,15 @@ interface FormData {
     repeatPassword: string
 }
 
+interface PasswordValidation {
+    minLength: boolean;
+    hasUpperCase: boolean;
+    hasLowerCase: boolean;
+    hasNumber: boolean;
+    hasSpecialChar: boolean;
+    passwordsMatch: boolean
+}
+
 export default function Register() {
     const [formData, setFormData] = useState<FormData>({
         username: "",
@@ -21,13 +30,52 @@ export default function Register() {
         password: "",
         repeatPassword: ""
     })
+
+    const [passwordValidation, setPasswordValidation] = useState<PasswordValidation>({
+        minLength: false,
+        hasUpperCase: false,
+        hasLowerCase: false,
+        hasNumber: false,
+        hasSpecialChar: false,
+        passwordsMatch: false
+    })
+
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [errors, setErrors] = useState<string | null>(null);
     const { reward: confettiReward, isAnimating: isConfettiAnimating } = useReward('confettiReward', 'confetti');
     const navigate = useNavigate();
 
+    useEffect(() => {
+        validatePassword(formData.password, formData.repeatPassword);
+    }, [formData.password, formData.repeatPassword]);
+
+    const validatePassword = (password: string, repeatPassword: string) => {
+        setPasswordValidation({
+            minLength: password.length >= 8,
+            hasUpperCase: /[A-Z]/.test(password),
+            hasLowerCase: /[a-z]/.test(password),
+            hasNumber: /[0-9]/.test(password),
+            hasSpecialChar: /[!@#$%^&*(),.?":{}|<>]/.test(password),
+            passwordsMatch: password === repeatPassword && password !== ''
+        })
+    }
+
+    const isPasswordValid = () => {
+        return Object.values(passwordValidation).every(value => value === true);
+    }
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        if (!isPasswordValid()) {
+            setErrors("senha lixo")
+            toast.error('senha lixo', {
+                duration: 3000,
+                position: "top-center"
+            })
+            return;
+        }
+
         setIsLoading(true);
 
         try {
@@ -75,6 +123,7 @@ export default function Register() {
                 duration: 3000,
                 position: "top-center"
             });
+            setErrors(null);
         }
     };
 
@@ -130,6 +179,31 @@ export default function Register() {
                         onChange={handleChange}
                         required
                     />
+                    <div className="space-y-2">
+                        <ul className="text-sm text-muted-foreground">
+                            <li className={passwordValidation.minLength ? "text-green-500" : ""}>
+                                ✓ Mínimo de 8 caracteres
+                            </li>
+                            <li className={passwordValidation.hasUpperCase ? "text-green-500" : ""}>
+                                ✓ Pelo menos uma letra maiúscula
+                            </li>
+                            <li className={passwordValidation.hasLowerCase ? "text-green-500" : ""}>
+                                ✓ Pelo menos uma letra minúscula
+                            </li>
+                            <li className={passwordValidation.hasNumber ? "text-green-500" : ""}>
+                                ✓ Pelo menos um número
+                            </li>
+                            <li className={passwordValidation.hasSpecialChar ? "text-green-500" : ""}>
+                                ✓ Pelo menos um caractere especial
+                            </li>
+                            <li className={passwordValidation.passwordsMatch ? "text-green-500" : ""}>
+                                ✓ As senhas coincidem
+                            </li>
+                        </ul>
+                    </div>
+                    {errors && (
+                        <p className="text-destructive text-sm text-center">{errors}</p>
+                    )}
                     <Button disabled={isConfettiAnimating} type="submit" className="w-full cursor-pointer">
                         Inscrever-se
                         <span id="confettiReward" />
