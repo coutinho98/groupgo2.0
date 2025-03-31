@@ -70,7 +70,7 @@ export default function Login() {
         <div className="min-h-screen flex items-center justify-center px-4 bg-background text-foreground relative">
             <Toaster richColors position="top-center" />
             <CustomTheme />
-            <div className="w-full max-w-sm space-y-8">
+            <div className="w-full max-w-sm space-y-4">
                 <div className="text-center flex flex-col items-center">
                     <UsersRound className="h-20 w-20 mb-10 text-foreground" />
                     <h1 className="text-5xl">GroupGo</h1>
