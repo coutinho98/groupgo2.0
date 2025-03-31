@@ -11,7 +11,7 @@ interface FormData {
     username: string;
     email: string;
     password: string;
-    repeatPassword: string
+    repeatPassword: string;
 }
 
 interface PasswordValidation {
@@ -20,7 +20,12 @@ interface PasswordValidation {
     hasLowerCase: boolean;
     hasNumber: boolean;
     hasSpecialChar: boolean;
-    passwordsMatch: boolean
+    passwordsMatch: boolean;
+}
+
+interface EmailValidation {
+    hasValidFormat: boolean;
+    hasDomain: boolean;
 }
 
 export default function Register() {
@@ -40,14 +45,31 @@ export default function Register() {
         passwordsMatch: false
     })
 
+    const [emailValidation, setEmailValidation] = useState<EmailValidation>({
+        hasValidFormat: false,
+        hasDomain: false
+    })
+
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [errors, setErrors] = useState<string | null>(null);
-    const { reward: confettiReward, isAnimating: isConfettiAnimating } = useReward('confettiReward', 'confetti');
+    const { reward: confettiReward, isAnimating: isConfettiAnimating } = useReward('confettiReward', 'confetti', {
+        elementCount: 50,
+        elementSize: 17,
+        colors: ['#00bba7', '#ff53ac', '#5733FF', '#b79700'],
+        position: 'fixed',
+        fps: 60,
+        spread: 70,
+        lifetime: 400,
+    });
     const navigate = useNavigate();
 
     useEffect(() => {
         validatePassword(formData.password, formData.repeatPassword);
     }, [formData.password, formData.repeatPassword]);
+
+    useEffect(() => {
+        validateEmail(formData.email);
+    }, [formData.email])
 
     const validatePassword = (password: string, repeatPassword: string) => {
         setPasswordValidation({
@@ -64,8 +86,32 @@ export default function Register() {
         return Object.values(passwordValidation).every(value => value === true);
     }
 
+    const isEmailValid = () => {
+        return Object.values(emailValidation).every(value => value === true);
+    };
+
+    const validateEmail = (email: string) => {
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        const parts = email.split('.');
+        const hasValidDomain = parts.length > 1 && parts[parts.length - 1].length >= 2;
+
+        setEmailValidation({
+            hasValidFormat: emailRegex.test(email),
+            hasDomain: hasValidDomain
+        });
+    }
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        if (!isEmailValid()) {
+            setErrors("O e-mail não é válido");
+            toast.error("O e-mail não é válido", {
+                duration: 3000,
+                position: "top-center"
+            });
+            return;
+        }
 
         if (!isPasswordValid()) {
             setErrors("senha lixo")
