@@ -6,7 +6,7 @@ const CustomTheme = () => {
     const { theme, toggleTheme } = useTheme();
 
     return (
-        <div className="absolute top-4 right-4 flex items-center space-x-2" >
+        <div className="absolute top-4 right-4 flex items-center space-x-2 text-[var(--foreground)]" >
             <Sun className="h-5 w-5" />
             <Switch
                 checked={theme === "dark"}
