@@ -6,6 +6,7 @@ import { UserPlus } from "lucide-react";
 import { toast } from 'sonner'
 import { useEffect, useState } from "react";
 import { useReward } from 'react-rewards';
+import { Card } from "@/components/ui/card";
 
 interface FormData {
     username: string;
@@ -183,11 +184,14 @@ export default function Register() {
     return (
         <div className="min-h-screen flex items-center justify-center px-4 bg-background text-foreground">
             <CustomTheme />
-            <div className="w-full max-w-sm space-y-4">
-                <div className="text-center flex flex-col items-center">
-                    <UserPlus className="h-20 w-20 mb-10 text-foreground" />
-                    <h1 className="text-5xl">Criar Conta</h1>
+            <Card className="relative w-full max-w-md p-8 space-y-6 bg-card/30 backdrop-blur-md border-muted/20">
+                <div className="text-center flex flex-col items-center space-y-4">
+                    <div className="rounded-full bg-primary/10 p-4 backdrop-blur-sm">
+                        <UserPlus className="h-12 w-12 text-primary" />
+                    </div>
+                    <h1 className="text-4xl font-bold tracking-tight">Criar Conta</h1>
                 </div>
+
                 <form className="space-y-4" onSubmit={handleSubmit}>
                     <Input
                         type="text"
@@ -261,7 +265,7 @@ export default function Register() {
                         Entrar
                     </Link>
                 </p>
-            </div>
+            </Card>
         </div>
     );
 }
