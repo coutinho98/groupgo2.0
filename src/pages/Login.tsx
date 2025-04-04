@@ -103,7 +103,7 @@ export default function Login() {
               </div>
               <Link
                 to="/forgot-password"
-                className="text-sm text-primary hover:underline"
+                className="text-sm text-primary hover:underline font-bold"
               >
                 Esqueceu a senha?
               </Link>
