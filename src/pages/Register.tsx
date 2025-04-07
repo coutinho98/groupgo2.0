@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Link, useNavigate } from "react-router";
 import CustomTheme from "@/components/CustomTheme";
-import { UserPlus } from "lucide-react";
+import { ArrowLeft, UserPlus } from "lucide-react";
 import { toast } from 'sonner'
 import { useEffect, useState } from "react";
 import { useReward } from 'react-rewards';
@@ -185,6 +185,11 @@ export default function Register() {
         <div className="min-h-screen flex items-center justify-center px-4 bg-background text-foreground">
             <CustomTheme />
             <Card className="relative w-full max-w-md p-8 space-y-6 bg-card/30 backdrop-blur-md border-muted/20">
+                <button>
+                    <Link to="/">
+                        <ArrowLeft className="" />
+                    </Link>
+                </button>
                 <div className="text-center flex flex-col items-center space-y-4">
                     <div className="rounded-full bg-primary/10 p-4 backdrop-blur-sm">
                         <UserPlus className="h-12 w-12 text-primary" />
