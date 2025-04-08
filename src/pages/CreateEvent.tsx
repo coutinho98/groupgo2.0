@@ -1,12 +1,18 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Plus, X, ArrowLeft } from 'lucide-react';
+import { Badge } from "@/components/ui/badge"
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
 import Sidebar from '@/components/Sidebar';
 import { useAuth } from '@/context/AuthContext';
 import CustomTheme from '@/components/CustomTheme';
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card"
 
 interface EventData {
   name: string;
@@ -15,7 +21,7 @@ interface EventData {
 
 export default function CreateEvent() {
   const navigate = useNavigate();
-  const {  loading: authLoading } = useAuth();
+  const { loading: authLoading } = useAuth();
 
   const [eventName, setEventName] = useState('');
   const [participant, setParticipant] = useState('');
@@ -152,16 +158,20 @@ export default function CreateEvent() {
                   {participants.map((email) => (
                     <div
                       key={email}
-                      className="flex items-center gap-1 bg-[var(--secondary)] px-2 py-1 rounded-full text-sm text-[var(--foreground)]"
                     >
-                      <span>{email}</span>
-                      <button
-                        type="button"
-                        onClick={() => handleRemoveParticipant(email)}
-                        className="text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
-                      >
-                        <X className="h-3 w-3" />
-                      </button>
+                      <HoverCard>
+                        <HoverCardTrigger><button
+                          type="button"
+                          onClick={() => handleRemoveParticipant(email)}
+                          className='cursor-pointer'
+                        >
+                          <Badge>{email} </Badge>
+                        </button>
+                        </HoverCardTrigger>
+                        <HoverCardContent>
+                          deseja remover {email}?
+                        </HoverCardContent>
+                      </HoverCard>
                     </div>
                   ))}
                 </div>
