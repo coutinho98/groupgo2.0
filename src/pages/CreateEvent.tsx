@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router';
 import { Plus, X, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { toast } from 'sonner';
 import Sidebar from '@/components/Sidebar';
 import { useAuth } from '@/context/AuthContext';

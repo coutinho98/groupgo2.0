@@ -1,14 +1,10 @@
 import { Link, useLocation } from 'react-router';
-import { Calendar, CalendarPlus, User } from 'lucide-react';
+import { Calendar, CalendarPlus } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/context/AuthContext';
 
-interface UserProfile {
-  name: string;
-  email: string;
-}
 
 export default function Sidebar() {
   const location = useLocation();

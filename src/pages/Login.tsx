@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Link, useNavigate } from "react-router";
-import { UsersRound, Github, Mail } from "lucide-react";
+import { UsersRound, Github } from "lucide-react";
 import CustomTheme from "@/components/CustomTheme";
 import { useAuth } from '@/context/AuthContext';
 import { toast, Toaster } from "sonner";
@@ -15,7 +15,7 @@ export default function Login() {
     password: "",
     rememberMe: false,
   });
-  const navigate = useNavigate();
+  
   const { login, loading, error } = useAuth();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,7 +66,7 @@ export default function Login() {
           <div className="rounded-full bg-primary/10 p-4 backdrop-blur-sm">
             <UsersRound className="h-12 w-12 text-primary" />
           </div>
-          <h1 className="text-4xl font-bold tracking-tight">GroupGo</h1>
+          <h1 className="text-4xl font-bold tracking-tight">GroupG o</h1>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
