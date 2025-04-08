@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Link, useNavigate } from "react-router";
+import { Link } from "react-router";
 import { UsersRound, Github } from "lucide-react";
 import CustomTheme from "@/components/CustomTheme";
 import { useAuth } from '@/context/AuthContext';
@@ -15,7 +15,7 @@ export default function Login() {
     password: "",
     rememberMe: false,
   });
-  
+
   const { login, loading, error } = useAuth();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

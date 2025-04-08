@@ -1,4 +1,4 @@
-import { Sun, Moon, UsersRound } from "lucide-react";
+import { Sun, Moon } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { useTheme } from "../context/ThemeProvider";
 
