@@ -1,9 +1,9 @@
 import { Link, useLocation } from 'react-router';
-import { Calendar, CalendarPlus, User, LogOut } from 'lucide-react';
+import { Calendar, CalendarPlus, User } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { useAuth } from '@/context/AuthContext'; 
+import { useAuth } from '@/context/AuthContext';
 
 interface UserProfile {
   name: string;
@@ -78,10 +78,8 @@ export default function Sidebar() {
       <div className="mt-auto p-6 border-t border-[var(--border)]">
         <div className="flex items-center gap-3 mb-4">
           <Avatar>
-            <AvatarImage src={"github.com/coutinho98.png"} alt={user.name} />
-            <AvatarFallback className="bg-[var(--muted)] text-[var(--muted-foreground)]">
-              <User className="h-8 w-8" />
-            </AvatarFallback>
+            <AvatarImage src="https://github.com/coutinho98.png" />
+            <AvatarFallback className="bg-[var(--muted)] text-[var(--muted-foreground)]">CN</AvatarFallback>
           </Avatar>
           <div>
             <p className="text-sm font-medium text-[var(--foreground)]">@{user.username}</p>

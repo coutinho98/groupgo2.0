@@ -16,10 +16,9 @@ interface EventData {
 
 export default function CreateEvent() {
   const navigate = useNavigate();
-  const { user, loading: authLoading } = useAuth();
+  const {  loading: authLoading } = useAuth();
 
   const [eventName, setEventName] = useState('');
-  const [eventDate, setEventDate] = useState('');
   const [participant, setParticipant] = useState('');
   const [participants, setParticipants] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
