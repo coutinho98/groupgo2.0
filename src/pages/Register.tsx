@@ -51,7 +51,7 @@ export default function Register() {
         hasDomain: false
     })
 
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [_isLoading, setIsLoading] = useState<boolean>(false);
     const [errors, setErrors] = useState<string | null>(null);
     const { reward: confettiReward, isAnimating: isConfettiAnimating } = useReward('confettiReward', 'confetti', {
         elementCount: 50,
