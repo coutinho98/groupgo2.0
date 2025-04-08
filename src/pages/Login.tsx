@@ -66,7 +66,7 @@ export default function Login() {
           <div className="rounded-full bg-primary/10 p-4 backdrop-blur-sm">
             <UsersRound className="h-12 w-12 text-primary" />
           </div>
-          <h1 className="text-4xl font-bold tracking-tight">GroupG o</h1>
+          <h1 className="text-4xl font-bold tracking-tight">GroupGo</h1>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
