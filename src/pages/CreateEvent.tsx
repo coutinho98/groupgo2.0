@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
-import { Plus, X, ArrowLeft } from 'lucide-react';
+import { Plus,  ArrowLeft } from 'lucide-react';
 import { Badge } from "@/components/ui/badge"
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
