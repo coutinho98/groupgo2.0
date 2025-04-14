@@ -122,7 +122,7 @@ export default function Events() {
                                             <h2 className="text-xl font-semibold text-card-foreground flex items-center gap-2">
                                                 {event.name}
                                                 {event.isManaged && (
-                                                    <Crown className="h-5 w-5 text-primary" />
+                                                    <Crown className="h-5 w-5 text-[#F3B61F]" />
                                                 )}
                                             </h2>
                                         </div>
